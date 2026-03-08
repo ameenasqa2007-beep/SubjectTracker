@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teacher Dashboard</title>
+</head>
+<body>
+
+<h2>Teacher Dashboard</h2>
+
+<!-- Add Subject -->
+<form action="/add_subject" method="POST">
+    <input type="text" name="subject" placeholder="New Subject" required>
+    <button type="submit">Add Subject</button>
+</form>
+
+<hr>
+
+{% for subject in subjects %}
+
+<h3>
+{{ subject[1] }}
+<a href="/delete_subject/{{ subject[0] }}"
+onclick="return confirm('Delete this subject and all files?')">
+❌ Delete Subject
+</a>
+</h3>
+
+<!-- Upload Files -->
+<form action="/upload/{{ subject[0] }}" method="POST" enctype="multipart/form-data">
+    <input type="file" name="files" multiple required>
+    <button type="submit">Upload Files</button>
+</form>
+
+<!-- File List -->
+<ul>
+{% for file in subject_files[subject[0]] %}
+    <li>
+        <a href="{{ url_for('static', filename='uploads/' + file[2]) }}" target="_blank">
+            {{ file[2] }}
+        </a>
+
+        <a href="/delete_file/{{ file[0] }}"
+        onclick="return confirm('Delete this file?')">
+        ❌ Delete
+        </a>
+    </li>
+{% endfor %}
+</ul>
+
+<hr>
+
+{% endfor %}
+
+<br>
+<a href="/logout">Logout</a>
+
+</body>
+</html>
