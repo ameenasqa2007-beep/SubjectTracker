@@ -1,22 +1,77 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Teacher Login</title>
+    <title>Student Subjects</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            background:#f4f4f4;
+            padding:40px;
+        }
+
+        h1{
+            text-align:center;
+        }
+
+        .subject{
+            background:white;
+            padding:20px;
+            margin-bottom:20px;
+            border-radius:8px;
+            box-shadow:0px 0px 5px gray;
+        }
+
+        ul{
+            list-style:none;
+            padding:0;
+        }
+
+        li{
+            margin:5px 0;
+        }
+
+        a{
+            text-decoration:none;
+            color:blue;
+        }
+
+        a:hover{
+            text-decoration:underline;
+        }
+
+    </style>
+
 </head>
+
 <body>
 
-<h2>Teacher Login</h2>
+<h1>Student Subject Materials</h1>
 
-<form method="POST">
-    <input type="text" name="username" placeholder="Username" required>
-    <br><br>
-    <input type="password" name="password" placeholder="Password" required>
-    <br><br>
-    <button type="submit">Login</button>
-</form>
+{% for subject in subjects %}
 
-<br>
-<a href="/student_login">Student Login</a>
+<div class="subject">
+
+    <h2>{{ subject[1] }}</h2>
+
+    <ul>
+
+    {% for file in subject_files[subject[0]] %}
+
+        <li>
+            <a href="/static/uploads/{{ file[2] }}" download>
+                {{ file[2] }}
+            </a>
+        </li>
+
+    {% endfor %}
+
+    </ul>
+
+</div>
+
+{% endfor %}
 
 </body>
 </html>
